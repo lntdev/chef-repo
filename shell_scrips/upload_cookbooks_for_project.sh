@@ -17,8 +17,8 @@ fi
 #GIT_BASE=$MOUNT_POINT_NAME/git/$1
 REPO_NAME=chef-repo
 CHEF_HOME=/home/ubuntu/chef-repo
-GIT_USER_NAME=readonly
-GIT_USER_PASSWORD=readonly
+GIT_USER_NAME=lntdev
+GIT_USER_PASSWORD=Intel2123
 GIT_CLONE_URL=https://$GIT_USER_NAME:$GIT_USER_PASSWORD@github.com/lntdev/$REPO_NAME.git
 PRODUCT_NAME=`echo $2 | awk -F'_' '{print $2}'`
 
@@ -82,7 +82,7 @@ do
        databag_name=`echo $one_databag | rev | cut -d/ -f1 | rev`
        databag_path=`dirname  $one_databag`   
        knife data bag create $databag_name --environment $2
-       knife data bag from file  $databag_name $MOUNT_POINT_NAME/$2/$REPO_NAME/$one_databag --environment $2 
+       knife data bag from file  $databag_name $REPO_NAME/$one_databag --environment $2 
 done
 echo "####################################"
 echo "# Finished uploading databags "
