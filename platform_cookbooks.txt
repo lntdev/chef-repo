@@ -1,0 +1,25 @@
+COOKBOOKS=(
+#############################
+# List of thridpaty cookbooks
+#############################
+#"third_party/cookbooks/lvm"
+#############################
+# List of platform cookbooks
+#############################
+"cookbooks/swpost_install_os"
+
+
+)
+
+##############################
+# List of roles
+##############################
+ROLES=(
+"/roles/sawtooth_setup.rb"
+)
+
+#############################
+# List of databags
+#############################
+DATABAGS=(
+)

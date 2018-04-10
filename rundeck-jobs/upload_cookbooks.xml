@@ -1,0 +1,27 @@
+<joblist>
+  <job>
+    <id>268f259e-a4e6-4fa6-9c2c-f6285643fbdd</id>
+    <loglevel>INFO</loglevel>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <jobref name='pull_from_git' group='install/Management' nodeStep='true'>
+          <arg line='-Branch_Name ${option.Branch_Name}' />
+        </jobref>
+      </command>
+      <command>
+        <exec>sudo /chef-repo/shell-scripts/upload_cookbooks_for_project.sh ${option.Branch_Name}</exec>
+      </command>
+    </sequence>
+    <description>This job will upload the cookbooks to the chef server environment . A text file containing the list of files needs to be placed in the path {product_name}/cookbooks/{product_name}_cookbooks.txt, which will be executed from this job</description>
+    <name>upload_cookbooks</name>
+    <context>
+      <options>
+        <option name='Branch_Name' required='true'>
+          <description>(Enter the branch name)</description>
+        </option>
+      </options>
+    </context>
+    <uuid>268f259e-a4e6-4fa6-9c2c-f6285643fbdd</uuid>
+    <group>install/Management</group>
+  </job>
+</joblist>
