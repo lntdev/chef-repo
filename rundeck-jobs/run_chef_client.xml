@@ -8,7 +8,7 @@
         <exec>cd /home/ubuntu/chef-repo; knife node run_list add node1 '${option.Role}'</exec>
       </command>
       <command>
-        <exec>cd /home/ubuntu/chef-repo; "sudo chef-client"
+        <exec>cd /home/ubuntu/chef-repo; "sudo chef-client"</exec>
     </sequence>
     <description>This job bootstraps a node against a chef environment. This will also create tags required for rundeck</description>
     <name>register_node_on_chef_server</name>
