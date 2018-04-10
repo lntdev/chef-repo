@@ -1,0 +1,42 @@
+<joblist>
+  <job>
+    <id>d162138a-3fc8-4c62-b6c0-8cc5b809e8cb</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <exec>sudo rm -f /home/ubuntu/${job.project}.*</exec>
+      </command>
+      <command>
+        <exec>sudo cp -r /automation/${job.project}/${job.project}.json /home/ubuntu</exec>
+      </command>
+      <command>
+        <exec>/automation/${job.project}/sawtooth_automation/platform/shell-scripts/run_chef_command.sh '${option.Role}' ${job.project}</exec>
+      </command>
+    </sequence>
+    <description>This job run the chef-client command on a node against a role, chef environment and json file passed as arguments</description>
+    <name>run_chef_client_on_node</name>
+    <context>
+      <project>dc10_mobile_impl</project>
+      <options>
+        <option name='Host_Name' required='true'>
+          <description>(enter host name on which the chef-client has to run)</description>
+        </option>
+        <option name='Role' valuesUrl='file:/automation/rundeck/jobs_rundeck/${job.project}_roles.json' enforcedvalues='true' required='true'>
+          <description>select the role on the chef-server to run the cookbooks</description>
+        </option>
+      </options>
+    </context>
+    <dispatch>
+      <threadcount>30</threadcount>
+      <keepgoing>false</keepgoing>
+      <excludePrecedence>true</excludePrecedence>
+      <rankOrder>ascending</rankOrder>
+    </dispatch>
+    <uuid>d162138a-3fc8-4c62-b6c0-8cc5b809e8cb</uuid>
+    <nodefilters>
+      <filter>${option.Host_Name}</filter>
+    </nodefilters>
+    <group>install/Chef</group>
+  </job>
+</joblist>
