@@ -18,7 +18,7 @@
         <option name='Host_Name' required='true'>
           <description>(enter the host name of the VM to be registered)</description>
         </option>
-        <option name='Rundeck_Tags' valuesUrl='file:/chef-repo/rundeck-jobs/server_tags.json' required='true' multivalued='true' delimiter=',' />
+        <option name='Rundeck_Tags' valuesUrl='file:/home/ubuntu/chef-repo/rundeck-jobs/server_tags.json' required='true' multivalued='true' delimiter=',' />
         <option name='User_Name' value='ubuntu' required='true'>
           <description>(enter the user name to login to the VM)</description>
         </option>
