@@ -5,7 +5,7 @@
     <multipleExecutions>true</multipleExecutions>
     <sequence keepgoing='false' strategy='node-first'>
       <command>
-        <exec>cd /home/ubuntu/chef-repo; knife bootstrap ${option.Host_IP} -N ${option.Host_Name} -x ubuntu -i /home/ubuntu/.ssh/id_rsa --sudo -E ${job.project} --template-file /home/ubuntu/sawtooth_automation/rundeck-jobs/chef-full.erb ; knife tag create ${option.Host_Name} ${option.Rundeck_Tags} ; knife tag create ${option.Host_Name} ${option.Host_IP}</exec>
+        <exec>cd /home/ubuntu/chef-repo; knife bootstrap ${option.Host_IP} -N ${option.Host_Name} -x ubuntu -P intel123 --sudo; knife tag create ${option.Host_Name} ${option.Rundeck_Tags} ; knife tag create ${option.Host_Name} ${option.Host_IP}</exec>
       </command>
     </sequence>
     <description>This job bootstraps a node against a chef environment. This will also create tags required for rundeck</description>
@@ -18,7 +18,7 @@
         <option name='Host_Name' required='true'>
           <description>(enter the host name of the VM to be registered)</description>
         </option>
-        <option name='Rundeck_Tags' valuesUrl='file:/home/ubuntu/sawtooth_automation/rundeck-jobs/server_tags.json' required='true' multivalued='true' delimiter=',' />
+        <option name='Rundeck_Tags' valuesUrl='file:/chef-repo/rundeck-jobs/server_tags.json' required='true' multivalued='true' delimiter=',' />
         <option name='User_Name' value='ubuntu' required='true'>
           <description>(enter the user name to login to the VM)</description>
         </option>
