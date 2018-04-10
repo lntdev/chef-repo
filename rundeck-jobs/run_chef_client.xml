@@ -5,22 +5,21 @@
     <multipleExecutions>true</multipleExecutions>
     <sequence keepgoing='false' strategy='node-first'>
       <command>
-        <exec>cd /home/chef-repo; knife ssh name:${option.Host_Name}  --sudo chef-client</exec>
+        <exec>cd /home/ubuntu/chef-repo; knife node run_list add node1 '${option.Role}'</exec>
       </command>
+      <command>
+        <exec>cd /home/ubuntu/chef-repo; "sudo chef-client"
     </sequence>
     <description>This job bootstraps a node against a chef environment. This will also create tags required for rundeck</description>
-    <name>run chef client on node</name>
+    <name>register_node_on_chef_server</name>
     <context>
       <options>
-        <option name='Host_IP' required='true'>
-          <description>(enter the IP address of the node to register)</description>
-        </option>
         <option name='Host_Name' required='true'>
-          <description>(enter the host name of the VM to be registered)</description>
+          <description>(enter the host name of the VM to add role)</description>
         </option>
-        <option name='Rundeck_Tags' valuesUrl='file:/automation/${job.project}/hcm-chef-automation/bizx/rundeck-jobs/server_tags.json' required='true' multivalued='true' delimiter=',' />
-        <option name='User_Name' value='deployer' required='true'>
-          <description>(enter the user name to login to the VM)</description>
+        <option name='Role' valuesUrl='file:/home/ubuntu/chef-repo/rundeck-jobs/roles.json' enforcedvalues='true' required='true'>
+          <description>select the role on the chef-server to run the cookbooks</description>
+        </option>
         </option>
       </options>
     </context>
