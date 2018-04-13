@@ -1,31 +1,25 @@
 <joblist>
   <job>
-    <id>d162138a-3fc8-4c62-b6c0-8cc5b809e8cb</id>
+    <id>ab7a4e6c-6d5f-4393-9416-56828f224437</id>
     <loglevel>INFO</loglevel>
     <multipleExecutions>true</multipleExecutions>
     <sequence keepgoing='false' strategy='node-first'>
       <command>
-        <exec>sudo rm -f /home/ubuntu/${job.project}.*</exec>
+        <exec>cd /home/ubuntu/chef-repo; knife node run_list add '${option.Host_Name}' '${option.Role}'</exec>
       </command>
       <command>
-        <exec>sudo cp -r /automation/${job.project}/${job.project}.json /home/ubuntu</exec>
-      </command>
-      <command>
-        <exec>/automation/${job.project}/sawtooth_automation/platform/shell-scripts/run_chef_command.sh '${option.Role}' ${job.project}</exec>
+        <exec>cd /home/ubuntu/chef-repo; knife ssh name:${option.Host_Name} "sudo chef-client"</exec>
       </command>
     </sequence>
-    <description>This job run the chef-client command on a node against a role, chef environment and json file passed as arguments</description>
-    <name>run_chef_client_on_node</name>
+    <description>this job to add runlist and run chef-client</description>
+    <name>Add_run LIST and Run chef-client</name>
     <context>
-      <project>dc10_mobile_impl</project>
       <options>
         <option name='Host_Name' required='true'>
-          <description>(enter host name on which the chef-client has to run)</description>
+          <description>(enter the host name of the VM to add role)</description>
         </option>
-        <option name='Role' valuesUrl='file:/automation/rundeck/jobs_rundeck/${job.project}_roles.json' enforcedvalues='true' required='true'>
-          <description>select the role on the chef-server to run the cookbooks</description>
-        </option>
-      </options>
+        <option name='Role' valuesUrl='file:/home/ubuntu/chef-repo/rundeck-jobs/roles.json' required='true' multivalued='true' delimiter=',' />
+        </options>
     </context>
     <dispatch>
       <threadcount>30</threadcount>
@@ -33,10 +27,7 @@
       <excludePrecedence>true</excludePrecedence>
       <rankOrder>ascending</rankOrder>
     </dispatch>
-    <uuid>d162138a-3fc8-4c62-b6c0-8cc5b809e8cb</uuid>
-    <nodefilters>
-      <filter>${option.Host_Name}</filter>
-    </nodefilters>
+    <uuid>ab7a4e6c-6d5f-4393-9416-56828f224437</uuid>
     <group>install/Chef</group>
   </job>
 </joblist>

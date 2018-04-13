@@ -8,11 +8,11 @@
         <exec>cd /home/ubuntu/chef-repo; knife node run_list add '${option.Host_Name}' '${option.Role}'</exec>
       </command>
       <command>
-        <exec>cd /home/ubuntu/chef-repo; knife ssh name:* "sudo chef-client"</exec>
+        <exec>cd /home/ubuntu/chef-repo; knife ssh name:${option.Host_Name} "sudo chef-client"</exec>
       </command>
     </sequence>
     <description>this job to add runlist and run chef-client</description>
-    <name>Add_run _List and run chef-client</name>
+    <name>Add_run _run chef-client</name>
     <context>
       <options>
         <option name='Host_Name' required='true'>
