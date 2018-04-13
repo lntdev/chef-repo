@@ -1,0 +1,52 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: 13
+  attributes:
+    firewall:
+      allow_ssh: true
+      allow_winrm: true
+      allow_mosh: true
+      allow_loopback: true
+      allow_icmp: true
+      firewalld:
+        permanent: true
+
+platforms:
+  - name: centos-6
+  - name: centos-7
+  - name: debian-7
+    run_list:
+      - recipe[apt]
+  - name: debian-8
+    run_list:
+      - recipe[apt]
+  - name: ubuntu-14.04
+    run_list:
+      - recipe[apt::default]
+  - name: ubuntu-16.04
+    run_list:
+      - recipe[apt::default]
+  - name: windows-2012r2
+
+suites:
+  - name: default
+    run_list:
+      - recipe[firewall::default]
+      - recipe[firewall-test::default]
+
+  - name: iptables
+    excludes:
+      - centos-5
+      - centos-6
+      - debian-7
+      - debian-8
+      - windows-2012r2
+    run_list:
+      - recipe[firewall-test::default]
+    attributes:
+      firewall:
+        ubuntu_iptables: true
+        redhat7_iptables: true

@@ -18,7 +18,7 @@
         <option name='Host_Name' required='true'>
           <description>(enter the host name of the VM to add role)</description>
         </option>
-        <option name='Role' valuesUrl='file:/home/ubuntu/chef-repo/rundeck-jobs/roles.json' required='true' multivalued='true' delimiter=',' />
+        <option name='Role' valuesUrl='file://var/rundeck/projects/project_bootstrap/etc/chef-repo/rundeck-jobs/roles.json' required='true' multivalued='true' delimiter=',' />
         </options>
     </context>
     <dispatch>
