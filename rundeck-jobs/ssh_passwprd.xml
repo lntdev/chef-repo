@@ -1,0 +1,12 @@
+<joblist>
+    <job>
+        <!-- ... -->
+        <context>
+          <project>dev-test</project>
+          <options>
+            <option required='true' name='sshPassword1' secure='true' valueExposed="false"/>
+          </options>
+        </context>
+        <!-- ... -->
+    </job>
+</joblist>

@@ -1,11 +1,11 @@
 <joblist>
   <job>
-    <id>c6f5a306-9714-4369-80b0-38d1f1289b66</id>
+    <id>c6f5a306-9714-4369-80b0-38d1f1289b67</id>
     <loglevel>INFO</loglevel>
     <multipleExecutions>true</multipleExecutions>
     <sequence keepgoing='false' strategy='node-first'>
       <command>
-        <exec>cd /home/ubuntu/chef-repo; knife bootstrap ${option.Host_IP} -N ${option.Host_Name} -x ubuntu -P intel123 --sudo; knife tag create ${option.Host_Name} ${option.Rundeck_Tags} ; knife tag create ${option.Host_Name} ${option.Host_IP}</exec>
+        <exec>cd /home/ubuntu/chef-repo; knife bootstrap ${option.Host_IP} -N ${option.Host_Name} -x ${option.User_Name} -P intel123 --sudo; knife tag create ${option.Host_Name} ${option.Rundeck_Tags} ; knife tag create ${option.Host_Name} ${option.Host_IP}</exec>
       </command>
     </sequence>
     <description>This job bootstraps a node against a chef environment. This will also create tags required for rundeck</description>
@@ -24,7 +24,7 @@
         </option>
       </options>
     </context>
-    <uuid>c6f5a306-9714-4369-80b0-38d1f1289b66</uuid>
+    <uuid>c6f5a306-9714-4369-80b0-38d1f1289b67</uuid>
     <group>install/Chef</group>
   </job>
 </joblist>

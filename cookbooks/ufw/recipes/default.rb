@@ -1,11 +1,12 @@
-#
-# Cookbook Name:: ufw
-# Recipe:: default
-#
-# Copyright 2018, YOUR_COMPANY_NAME
-#
-# All rights reserved - Do Not Redistribute
-#
-package 'ufw' do
+#include_recipe 'ufw::ufw'
+#include_recipe 'ufw::ssh'
+include_recipe "ufw::host"
+include_recipe 'ufw::rsyslog'
+
+
+package 'vim' do
   action :install
 end
+
+
+
