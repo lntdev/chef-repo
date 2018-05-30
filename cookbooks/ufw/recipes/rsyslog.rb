@@ -1,7 +1,6 @@
 
-package 'rysyslog' do
+apt_package 'rsyslog' do
   action :install
-  ignore_failure true
 end
 
 template '/etc/rsyslog.d/10-rsyslog.conf' do
@@ -10,3 +9,10 @@ template '/etc/rsyslog.d/10-rsyslog.conf' do
   group 'root'
   mode '0755'
 end
+
+service 'rsyslog' do
+  supports :status => true, :restart => true, :reload => true
+  action [:restart]
+end
+
+

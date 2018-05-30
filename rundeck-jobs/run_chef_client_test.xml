@@ -1,0 +1,36 @@
+<joblist>
+  <job>
+    <id>ab7a4e6c-6d5f-4393-9416-56828f224439</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>        
+        <exec>cd /home/ubuntu/chef-repo; knife node run_list set '${option.Host_Name}' 'role[${option.Role}]' </exec>
+      </command>
+      <command>
+        <exec>cd /home/ubuntu/chef-repo; knife ssh name:${option.Host_Name} -x rundeck -P '${option.sshPassword1}' "sudo chef-client"</exec>
+      </command>
+    </sequence>
+    <description>this job to add runlist and run chef-client</description>
+    <name>Add_runlist and run chef-client</name>
+    <context>
+      <options>
+        <option name='Host_Name' required='true'>
+          <description>(enter the host name of the VM to add role)</description>
+        </option>
+        <option name='Role' value='role[general]' valuesUrl='file:/var/rundeck/projects/project_bootstrap/etc/chef-repo/rundeck-jobs/roles.json' enforcedvalues='true' required='true'>
+          <description>select the role on the chef-server to run the cookbooks</description>
+        </option>
+        <option required='true' name='sshPassword1' secure='true' valueExposed="false"/>
+      </options>
+    </context>
+    <dispatch>
+      <threadcount>30</threadcount>
+      <keepgoing>false</keepgoing>
+      <excludePrecedence>true</excludePrecedence>
+      <rankOrder>ascending</rankOrder>
+    </dispatch>
+    <uuid>ab7a4e6c-6d5f-4393-9416-56828f224439</uuid>
+    <group>install/test/Chef</group>
+  </job>
+</joblist>

@@ -10,7 +10,7 @@
       </command>
       <command>
         <scriptargs />
-        <script><![CDATA[/automation/git/$RD_OPTION_BRANCH_NAME/hcm-chef-automation/platform/shell-scripts/upload_rundeck_jobs.sh $RD_OPTION_BRANCH_NAME $RD_JOB_PROJECT]]></script>
+        <script><![CDATA[/automation/git/$RD_OPTION_BRANCH_NAME/shell-scripts/upload_rundeck_jobs.sh $RD_OPTION_BRANCH_NAME $RD_JOB_PROJECT]]></script>
       </command>
     </sequence>
     <description>This job will upload all the xml job definitions from platform/rundeck-jobs and product_name/rundeck-jobs into the current rundeck project</description>

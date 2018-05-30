@@ -5,10 +5,10 @@
     <multipleExecutions>true</multipleExecutions>
     <sequence keepgoing='false' strategy='node-first'>
       <command>        
-        <exec>cd /home/ubuntu/chef-repo; knife node run_list set '${option.Host_Name}' 'role[${option.Role}]' </exec>
+        <exec>cd /home/ubuntu/chef-repo; knife node run_list set '${option.Host_Name}' '${option.Role}'</exec>
       </command>
       <command>
-        <exec>cd /home/ubuntu/chef-repo; knife ssh name:${option.Host_Name} -x rundeck -P '${option.sshPassword1}' "sudo chef-client"</exec>
+        <exec>cd /home/ubuntu/chef-repo; knife ssh name:${option.Host_Name} -x ${option.User_Name} -P ${option.sshPassword1} "sudo chef-client"</exec>
       </command>
     </sequence>
     <description>this job to add runlist and run chef-client</description>
@@ -18,8 +18,15 @@
         <option name='Host_Name' required='true'>
           <description>(enter the host name of the VM to add role)</description>
         </option>
-        <option name='Role' valuesUrl='file://var/rundeck/projects/project_bootstrap/etc/chef-repo/rundeck-jobs/roles.json' required='true' multivalued='true' delimiter=',' />
-          <description>(type the role name)</description>
+        <option name='Role' value='role[general]' valuesUrl='file:/var/rundeck/projects/project_bootstrap/etc/chef-repo/rundeck-jobs/roles.json' enforcedvalues='true' required='true'>
+          <description>select the role on the chef-server to run the cookbooks</description>
+        </option>
+        <option name='Host_Name' value='apple-desktop' valuesUrl='file:/var/rundeck/projects/project_bootstrap/etc/chef-repo/rundeck-jobs/host.json' enforcedvalues='true' required='true'>
+          <description>select hostname to chef-clent run</description>
+        </option>
+        <option name='User_Name' value='ubuntu' required='true'>
+          <description>(enter the user name to login to the VM)</description>
+        </option>
         <option required='true' name='sshPassword1' secure='true' valueExposed="false"/>
       </options>
     </context>

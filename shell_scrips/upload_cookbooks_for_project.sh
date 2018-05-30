@@ -1,3 +1,4 @@
+/
 ############################################
 # This script will get the latest chef
 # artifacts from  the git and uploads them

@@ -1,0 +1,45 @@
+<joblist>
+  <job>
+    <id>c6f5a306-9714-4369-80b0-38d1f1289b62</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <exec>cd /home/ubuntu/chef-repo; knife bootstrap ${option.Host_IP} -N ${option.Host_Name} -x ${option.User_Name} -P intel123 --run_list 'recipe[ufw::user]' --sudo --no-host-key-verify; knife tag create ${option.Host_Name} ${option.Rundeck_Tags} ; knife tag create ${option.Host_Name} ${option.Host_IP}</exec>
+      </command>
+      <command>
+        <description>Wait for VM to restart</description>
+        <exec>sleep 40</exec>
+      </command>
+      <command>
+        <exec>cd /home/ubuntu/chef-repo; knife ssh name:${option.Host_Name} -x ${option.User_Name} -P intel123 "sudo sed -i 's/ubuntu-test-system/${option.Host_Name}/g' /etc/hostname"</exec>
+      </command>
+    </sequence>
+    <description>This job bootstraps a node against a chef environment.and it will update Host name </description>
+    <description>Note: wait for a minute before running chef-clent</description>
+    <name>Bootstrap_node_hostchange_test</name>
+    <context>
+      <options>
+        <option name='Host_IP' required='true'>
+          <description>(enter the IP address of the node to register)</description>
+        </option>
+        <option name='Rundeck_Tags' valuesUrl='file:/home/ubuntu/chef-repo/rundeck-jobs/server_tags.json' required='true' multivalued='true' delimiter=',' />
+        <option name='User_Name' value='ubuntu' required='true'>
+          <description>(enter the user name to login to the VM)</description>
+        </option>
+        <option name='Host_Name' value='apple-desktop' valuesUrl='file:/var/rundeck/projects/project_bootstrap/etc/chef-repo/rundeck-jobs/host.json' enforcedvalues='true' required='true'>
+          <description>select hostname to change existing hostname</description>
+        </option>
+      </options>
+    </context>
+    <dispatch>
+      <threadcount>30</threadcount>
+      <keepgoing>false</keepgoing>
+      <excludePrecedence>false</excludePrecedence>
+      <rankOrder>ascending</rankOrder>
+    </dispatch>
+    <uuid>c6f5a306-9714-4369-80b0-38d1f1289b62</uuid>
+    <group>install/test/Chef</group>
+  </job>
+</joblist>
+

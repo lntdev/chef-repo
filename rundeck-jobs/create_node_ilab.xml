@@ -5,27 +5,19 @@
     <multipleExecutions>true</multipleExecutions>
     <sequence keepgoing='false' strategy='step-first'>
       <command>
-        <exec>/automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/mapper.rb -u ${option.username} -p ${option.password} -h ${option.host_number} -o ${option.ostype} -s ${option.server_type} -c ${option.size_cpu_ram} -r ${job.project} -e ${job.execid} -j /automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/json/template_compute.json -d /automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/json/dc_config.json</exec>
-        <description>Preparing mapper json</description>
-      </command>
-      <command>
-        <exec>/automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/provision_wrapper.rb -r ${job.project} -e ${job.execid} -j /automation/${job.project}/mapper_${job.execid}.json</exec>
-        <description>Triggered VM creation</description>
-      </command>
-      <command>
-        <exec>/automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/postaction/postvmcreation.rb -o ${option.ostype} -r ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json -m /automation/${job.project}/mapper_${job.execid}.json -d /automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/json/dc_config.json</exec>
+        <exec>/automation/${job.project}/hcm-chef-automation/platform/rundeck-scripts/vmcreation_v2/postaction/postvmcreation.rb -o ${option.ostype} -r ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json -m /automation/${job.project}/mapper_${job.execid}.json -d /automation/${job.project}/hcm-chef-automation/platform/rundeck-scripts/vmcreation_v2/json/dc_config.json</exec>
         <description>Creating users and mount points</description>
       </command>
       <command>
-        <exec>/automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/postaction/register_node_chef_server.rb -o ${option.ostype} -r ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json -t /automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/json/template_compute.json</exec>
+        <exec>/automation/${job.project}/hcm-chef-automation/platform/rundeck-scripts/vmcreation_v2/postaction/register_node_chef_server.rb -o ${option.ostype} -r ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json -t /automation/${job.project}/hcm-chef-automation/platform/rundeck-scripts/vmcreation_v2/json/template_compute.json</exec>
         <description>Registering node to Chef Server</description>
       </command>
       <command>
-        <exec>/automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/postaction/run_chef_client.rb -o ${option.ostype} -r ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json -t /automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/json/template_compute.json</exec>
+        <exec>/automation/${job.project}/hcm-chef-automation/platform/rundeck-scripts/vmcreation_v2/postaction/run_chef_client.rb -o ${option.ostype} -r ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json -t /automation/${job.project}/hcm-chef-automation/platform/rundeck-scripts/vmcreation_v2/json/template_compute.json</exec>
         <description>Running Base OS on node</description>
       </command>
       <command>
-        <exec>/automation/${job.project}/sawtooth_automation/platform/rundeck-scripts/vmcreation_v2/postaction/run_serverspec.rb -o ${option.ostype} -p ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json</exec>
+        <exec>/automation/${job.project}/hcm-chef-automation/platform/rundeck-scripts/vmcreation_v2/postaction/run_serverspec.rb -o ${option.ostype} -p ${job.project} -e ${job.execid} -j /automation/${job.project}/postaction_${job.execid}.json</exec>
         <description>Running Platform Serverspec</description>
       </command>
     </sequence>
@@ -44,7 +36,7 @@
           <description>Provide your SFDC password</description>
         </option>
         <option name='host_number' regex='[0-9]*' required='true'>
-          <description>Provide DC specific unique host number.			For Example : For hostname 'pc4bcf01' host_number = 01</description>
+          <description>Provide DC specific unique host number.      For Example : For hostname 'pc4bcf01' host_number = 01</description>
         </option>
         <option name='ostype' value='None' valuesUrl='http://10.8.198.134:3000/ostype/${job.project}' enforcedvalues='true' required='true' />
         <option name='server_type' value='None' valuesUrl='http://10.8.198.134:3000/servertype/${job.project}' enforcedvalues='true' required='true' />

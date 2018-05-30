@@ -5,10 +5,15 @@
 # Copyright 2018, YOUR_COMPANY_NAME
 #
 # All rights reserved - Do Not Redistribute
+
+node.default['firewall']['ipv6_enabled'] = false
+
 #
 firewall 'default' do
   action :install
 end
+
+
 service 'ufw' do
   supports :status => true, :restart => true, :reload => true
   action [:start, :enable]
@@ -22,14 +27,6 @@ firewall_rule 'ssh' do
   only_if { node['firewall']['allow_ssh'] }
 end
 
-=begin
-firewall_rule 'allow world to ssh' do
-  port 60249
-  source '192.168.1.0/24'
-  only_if { linux? && node['firewall']['allow_ssh'] }
-end
-=end
-
 
 firewall_rule 'allow world to ssh' do
   port      8800
@@ -37,7 +34,6 @@ firewall_rule 'allow world to ssh' do
   direction :in
   command    :allow
 end
-
 
 
 execute 'logging on ' do
@@ -52,7 +48,10 @@ execute 'deny outgoing' do
   command 'sudo ufw default allow outgoing'
   action :run
 end
-
+#execute 'add port for rsylog' do
+#  command 'sudo ufw allow 514/tcp'
+# action :run
+#end
 
 service 'ufw' do
   supports :status => true, :restart => true, :reload => true

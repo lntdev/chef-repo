@@ -1,0 +1,56 @@
+<joblist>
+  <job>
+    <id>ce057d94-2b6b-448a-ad3d-7aaa0848b0eg</id>
+    <loglevel>INFO</loglevel>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <scriptargs />
+        <script><![CDATA[/home/ubuntu/rundeck/tools/bin/rd-project -a create -p $RD_OPTION_PROJECT_NAME \
+--project.ssh-authentication=privateKey \
+--project.ssh-keypath=/home/ubuntu/.ssh/id_rsa \
+--service.NodeExecutor.default.provider=jsch-ssh \
+--service.FileCopier.default.provider=jsch-scp \
+--resources.source.1.config.args="$RD_OPTION_CHEF_SERVER_ENVIRONMENT $RD_OPTION_CHEF_SERVER_IP /home/ubuntu/.chef/sysadmin.pem" \
+--resources.source.1.type=script \
+--resources.source.1.config.argsQuoted=false \
+--resources.source.1.config.interpreter=/opt/chef/embedded/bin/ruby \
+--resources.source.1.config.format=resourcexml \
+--resources.source.1.config.file=/home/ubuntu/rundeck/get_nodes_from_chef_server.rb \
+--resources.source.2.config.file=/home/ubuntu/rundeck/projects/$RD_OPTION_PROJECT_NAME/etc/resources.xml \
+--resources.source.2.config.generateFileAutomatically=false \
+--resources.source.2.config.requireFileExists=false \
+--resources.source.2.config.includeServerNode=false \
+--resources.source.2.config.format=resourcexml \
+--resources.source.2.type=file
+cp /home/ubuntu/rundeck/projects/project_bootstrap/etc/resources.xml /home/ubuntu/rundeck/projects/$RD_OPTION_PROJECT_NAME/etc/resources.xml]]></script>
+      </command>
+      <command>
+        <scriptargs />
+        <script><![CDATA[/automation/git/$RD_OPTION_GIT_BRANCH_NAME//var/rundeck/projects/project_bootstrap/etc/chef-repo/shell_scrips/upload_rundeck_jobs.sh $RD_OPTION_GIT_BRANCH_NAME $RD_OPTION_PROJECT_NAME
+ knife environment create $RD_OPTION_CHEF_SERVER_ENVIRONMENT -c /home/ubuntu/.chef/knife.rb --disable-editing]]></script>
+      </command>
+    </sequence>
+    <description>This job will create rundeck project that will automatically include
+1) Nodes from a specified chef server environment
+2) Correct ubuntu key</description>
+    <name>create_rundeck_project</name>
+    <context>
+      <project>project_bootstrap_creation</project>
+      <options>
+        <option name='Chef_Server_Environment'>
+          <description>(Name of the environment in Chef-Server from where the nodes should be retrieved)</description>
+        </option>
+        <option name='Chef_Server_IP'>
+          <description>(IP of the Chef server from where the nodes will be retrieved)</description>
+        </option>
+        <option name='Git_Branch_Name'>
+          <description>Name of the Git branch from where the initial rundeck jobs should be loaded</description>
+        </option>
+        <option name='Project_Name'>
+          <description>(Name of the new project)</description>
+        </option>
+      </options>
+    </context>
+    <uuid>ce057d94-2b6b-448a-ad3d-7aaa0848b0eg</uuid>
+  </job>
+</joblist>

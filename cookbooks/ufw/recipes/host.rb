@@ -16,8 +16,10 @@ ip = node['ipaddress']
 puts ip
 puts "========================================================================================"
 fqdn1 = node['fqdn']
-
+#host = date1 = Mixlib::ShellOut.new("cat /etch/hostname").run_command.stdout
 host = node['hostname']
+puts host
+puts "========================================================================================="
 
 # Modify hosts file if backup of it is created successfully
 if cp1 == 0
@@ -34,3 +36,11 @@ end
 
 
 
+=begin
+puts "SYSTEM TAKING REBOOT TO INCORPORATE HOSTNAME CHANGE"
+execute 'reboot after hostname change' do
+  command 'cat /etc/hostname'
+  action :nothing
+  notifies :reboot_now, 'reboot[now]', :immediately
+end
+=end
