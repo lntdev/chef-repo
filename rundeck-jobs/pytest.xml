@@ -6,7 +6,7 @@
       <command>
         <scriptargs />
         <script><![CDATA[GIT_BASE=/tmp/git
-GIT_REPO=/home/rundeck/          
+GIT_REPO=sawtooth-core
 REPO_NAME=sawtooth-core
 GIT_USER_NAME=lntdev
 GIT_USER_PASSWORD=Intel@123
@@ -31,7 +31,7 @@ else
 echo "Git Pull is done"]]></script>
       </command>
     <command>
-        <exec>cd /tmp/git/sawtooth-core/rest_api/tests/api_test/; /home/rundeck/.local/bin/pytest --get</exec>
+        <exec>cd /home/val/api_test; /home/val/.local/bin/pytest --get; /usr/bin/aws s3 cp report.json s3://validation.sawtooth</exec>
     </command>
     </sequence>
     <description>This job will get the latest or clone the Git repo at /tmp/git location</description>
@@ -44,7 +44,7 @@ echo "Git Pull is done"]]></script>
     </context>
     <uuid>ab80221c-ae5e-4878-b301-3a2c17096e2f</uuid>
      <nodefilters>
-      <filter>name: val</filter>
+      <filter>name: cosmos-desktop</filter>
     </nodefilters>
     <group>Management</group>
   </job>
