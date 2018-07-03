@@ -1,0 +1,51 @@
+<joblist>
+  <job>
+    <id>ab80221c-ae5e-4878-b301-3a2c17096e2f</id>
+    <loglevel>INFO</loglevel>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <scriptargs />
+        <script><![CDATA[GIT_BASE=/tmp/git
+GIT_REPO=/home/rundeck/          
+REPO_NAME=sawtooth-core
+GIT_USER_NAME=lntdev
+GIT_USER_PASSWORD=Intel@123
+GIT_CLONE_URL=https://github.com/lntdev/sawtooth-core.git
+
+if [ ! -d "$GIT_BASE" ]; then
+ echo "$RD_OPTION_BRANCH_NAME does not exists. Creating directory and cloning the $RD_OPTION_BRANCH_NAME"
+  mkdir $GIT_BASE
+  cd $GIT_BASE
+  git clone $GIT_CLONE_URL
+  cd $GIT_BASE/$REPO_NAME
+ git checkout rest_api_testing
+else
+ cd $GIT_BASE/$REPO_NAME
+ git reset --hard origin/rest_api_testing
+ git stash
+ git rebase
+ git checkout rest_api_testing
+ git pull
+ fi
+
+echo "Git Pull is done"]]></script>
+      </command>
+    <command>
+        <exec>cd /tmp/git/sawtooth-core/rest_api/tests/api_test/; /home/rundeck/.local/bin/pytest --get</exec>
+    </command>
+    </sequence>
+    <description>This job will get the latest or clone the Git repo at /tmp/git location</description>
+    <name>pull_from_git</name>
+    <context>
+      <project>validation</project>
+      <options>
+        <option name='Branch_Name' required='true' />
+      </options>
+    </context>
+    <uuid>ab80221c-ae5e-4878-b301-3a2c17096e2f</uuid>
+     <nodefilters>
+      <filter>name: val</filter>
+    </nodefilters>
+    <group>Management</group>
+  </job>
+</joblist>
