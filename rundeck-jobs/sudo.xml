@@ -1,0 +1,32 @@
+<joblist>
+  <job>
+    <id>ab7a4e6c-6d5f-4393-9416-56828f22443f</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <exec>sudo apt-get update</exec>
+      </command>
+    </sequence>
+    <description>runsudo</description>
+    <name>runsudo commands </name>
+    <context>
+          <project>project</project>
+          <options>
+            <option required='true' name='sudoPassword2' secure='true' 
+                    description="Sudo authentication password"/>
+          </options>
+        </context>
+    <dispatch>
+      <threadcount>30</threadcount>
+      <keepgoing>false</keepgoing>
+      <excludePrecedence>true</excludePrecedence>
+      <rankOrder>ascending</rankOrder>
+    </dispatch>
+    <uuid>ab7a4e6c-6d5f-4393-9416-56828f22443f</uuid>
+    <nodefilters>
+      <filter>name: val</filter>
+    </nodefilters>
+    <group>Management</group>
+  </job>
+</joblist>
